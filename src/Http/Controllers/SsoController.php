@@ -28,5 +28,34 @@ class SsoController extends Controller
         $response =  $sso->verifyEmail($request->email,$request->activation_code);
         return $this->showMessage($response->object(),$response->status());
      }
+    
+    public function consent(Request $request) {
+        $sso = new Sso();
+        $response =  $sso->consent($request->user_id);
+        return $this->showMessage($response->object(),$response->status());
+    }
 
+    public function changePassword(Request $request) {
+        $sso = new Sso();
+        $response = $sso->changePassword($request->user_id,$request->old_password,$request->password,$request->password_confirmation);
+        return $this->showMessage($response->object(),$response->status());
+    }
+
+    public function requestResetPassword(Request $request) {
+        $sso = new Sso();
+        $response = $sso->requestResetPassword($request->user_id);
+        return $this->showMessage($response->object(),$response->status());
+
+    }
+    public function passwordReset(Request $request) {
+        $sso = new Sso();
+        $response = $sso->passwordReset($request->password,$request->password_confirmation,$request->reset_token);
+        return $this->showMessage($response->object(),$response->status());
+    }
+
+    public function updateProfile(Request $request) {
+        $sso = new Sso();
+        $response = $sso->updateProfile($request->user_id,$request->profile);
+        return $this->showMessage($response->object(),$response->status());
+    }
 }
