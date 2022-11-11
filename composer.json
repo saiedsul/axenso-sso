@@ -1,0 +1,30 @@
+{
+    "name": "axenso/sso",
+    "require": {
+        "php": "^7.0|^8.0",
+        "guzzlehttp/guzzle": "7.0.1"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "7.0.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Saied Suliman",
+            "email": "saied.sul@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "Axenso\\Sso\\": "src/"
+        }
+      },
+      "extra": {
+        "laravel": {
+          "providers": [
+            "Axenso\\Sso\\Providers\\SsoServiceProvider"
+          ]
+        }
+      },
+    "minimum-stability": "dev"
+}
