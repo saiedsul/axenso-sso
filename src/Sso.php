@@ -18,7 +18,6 @@ class Sso {
 
     public function __construct()
     {
-        
         $this->grant_type = config('sso.sso_grant_type');
         $this->client_secret = config('sso.sso_client_secret');
         $this->client_id = config('sso.sso_client_id');
@@ -28,6 +27,7 @@ class Sso {
 
     public function login($email,$password) {
         $response = Http::accept('application/json')
+                             ->withHeaders(['origin' => config('app.url')])
                             ->withToken($this->token->token)
                             ->post($this->sso_base_url.'/api/user/login',[
                                 'email' => $email,
@@ -36,6 +36,7 @@ class Sso {
                             ]);
         return $response;
     }
+
     public function register($email,$password,$password_confirmation,$profile) {
         $payload = array(
           'email' => $email,
@@ -47,6 +48,7 @@ class Sso {
           'client_secret' =>  $this->client_secret,
         );
         $response = Http::accept('application/json')
+                             ->withHeaders(['origin' => config('app.url')])
                             ->withToken($this->token->token)
                             ->post($this->sso_base_url.'/api/user/signup', $payload);
         return $response;
@@ -59,8 +61,9 @@ class Sso {
             'client_id' =>  $this->client_id,
             'client_secret' =>  $this->client_secret,
           );
-         
+
           $response = Http::accept('application/json')
+                             ->withHeaders(['origin' => config('app.url')])
                             ->withToken($this->token->token)
                             ->post($this->sso_base_url.'/api/user/activate', $payload);
           return $response;
@@ -72,7 +75,8 @@ class Sso {
             'user_id' => $user_id
         ];
         $response = Http::accept('application/json')
-                        ->withToken($this->token->token)
+                         ->withHeaders(['origin' => config('app.url')])
+                            ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/consent',$payload);
         return $response;
     }
@@ -82,7 +86,8 @@ class Sso {
             'user_id' => $user_id,
         ];
         $response = Http::accept('application/json')
-                        ->withToken($this->token->token)
+                         ->withHeaders(['origin' => config('app.url')])
+                            ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/password/reset-request',$payload);
         return $response;
     }
@@ -94,7 +99,8 @@ class Sso {
             'password_confirmation' => $password_confirmation
         ];
         $response = Http::accept('application/json')
-                        ->withToken($this->token->token)
+                         ->withHeaders(['origin' => config('app.url')])
+                            ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/password/reset',$payload);
         return $response;
     }
@@ -107,7 +113,8 @@ class Sso {
             'password_confirmation' => $password_confirmation
         ];
         $response = Http::accept('application/json')
-                        ->withToken($this->token->token)
+                         ->withHeaders(['origin' => config('app.url')])
+                            ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/password/change',$payload);
         return $response;
     }
@@ -118,14 +125,15 @@ class Sso {
             'profile' => $profile,
         ];
         $response = Http::accept('application/json')
-                        ->withToken($this->token->token)
+                         ->withHeaders(['origin' => config('app.url')])
+                            ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/update-profile',$payload);
         return $response;
     }
     public function getToken() {
         $now = Carbon::now()->addHours(1);
         $existingToken = SsoToken::where('expires_at' ,'>' ,$now )->first();
-       
+
         if ($existingToken != null ) {
             return $existingToken;
         }
@@ -134,7 +142,7 @@ class Sso {
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
         ]);
-        
+
         if ($sessionToken->status() == 200) {
             $token = SsoToken::create([
                         'token' => $sessionToken->object()->access_token ,
@@ -146,6 +154,6 @@ class Sso {
             return null;
         }
         return null;
-    
+
     }
 }
