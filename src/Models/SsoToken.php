@@ -15,4 +15,6 @@ class SsoToken extends Model {
         'expires_at' => 'datetime',
     ];
 
+
+
 }
