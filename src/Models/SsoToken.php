@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SsoToken extends Model {
     use HasFactory;
     //protected $table= 'sso_tokens';
-    protected $connection = 'mysql';
+    //protected $connection = 'mysql';
     protected $fillable=[
        'token',
        'expires_at',
