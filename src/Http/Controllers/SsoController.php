@@ -22,13 +22,13 @@ class SsoController extends Controller
        $response =  $sso->register($request->email,$request->password,$request->password_confirmation,$request->profile);
        return $this->showMessage($response->object(),$response->status());
     }
-    
+
     public function verifyEmail(Request $request){
         $sso = new Sso();
-        $response =  $sso->verifyEmail($request->email,$request->activation_code);
+        $response =  $sso->verifyEmail($request->activation_code);
         return $this->showMessage($response->object(),$response->status());
      }
-    
+
     public function consent(Request $request) {
         $sso = new Sso();
         $response =  $sso->consent($request->user_id);
@@ -43,7 +43,7 @@ class SsoController extends Controller
 
     public function requestResetPassword(Request $request) {
         $sso = new Sso();
-        $response = $sso->requestResetPassword($request->user_id);
+        $response = $sso->requestResetPassword($request->email);
         return $this->showMessage($response->object(),$response->status());
 
     }

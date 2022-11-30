@@ -2,8 +2,7 @@
     "name": "axenso/sso",
     "require": {
         "php": "^7.0|^8.0",
-        "guzzlehttp/guzzle": "^7.2",
-        "formfeed-uk/nova-logo-url": "^1.0"
+        "guzzlehttp/guzzle": "^7.2"
     },
     "license": "MIT",
     "authors": [

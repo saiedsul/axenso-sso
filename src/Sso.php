@@ -54,16 +54,12 @@ class Sso {
         return $response;
     }
 
-    public function verifyEmail($email,$activation_code) {
+    public function verifyEmail($activation_code) {
         $payload = array(
-            'email' => $email,
             'activation_code' => $activation_code,
-            'client_id' =>  $this->client_id,
-            'client_secret' =>  $this->client_secret,
           );
-
           $response = Http::accept('application/json')
-                             ->withHeaders(['origin' => config('app.url')])
+                            ->withHeaders(['origin' => config('app.url')])
                             ->withToken($this->token->token)
                             ->post($this->sso_base_url.'/api/user/activate', $payload);
           return $response;
@@ -81,13 +77,14 @@ class Sso {
         return $response;
     }
 
-    public function requestResetPassword($user_id) {
+    public function requestResetPassword($email) {
         $payload = [
-            'user_id' => $user_id,
+            'email' => $email,
+            'client_id' => $this->client_id,
         ];
         $response = Http::accept('application/json')
-                         ->withHeaders(['origin' => config('app.url')])
-                            ->withToken($this->token->token)
+                        ->withHeaders(['origin' => config('app.url')])
+                        ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/password/reset-request',$payload);
         return $response;
     }
