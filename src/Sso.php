@@ -127,6 +127,36 @@ class Sso {
                         ->post($this->sso_base_url.'/api/user/update-profile',$payload);
         return $response;
     }
+
+    public function getProfessions() {
+        $response = Http::accept('application/json')
+                            ->withHeaders(['origin' => config('app.url')])
+                            ->get($this->sso_base_url.'/api/data/'.$this->client_id.'/professions');
+        return $response;
+    }
+
+    public function getCountries() {
+        $response = Http::accept('application/json')
+                            ->withHeaders(['origin' => config('app.url')])
+                            ->get($this->sso_base_url.'/api/data/'.$this->client_id.'/countries');
+        return $response;
+    }
+
+    public function getCities($province_short) {
+        $response = Http::accept('application/json')
+          ->withHeaders(['origin' => config('app.url')])
+          ->get($this->sso_base_url.'/api/data/'.$this->client_id.'/cities?province='.$province_short);
+        return $response;
+    }
+
+    public function getGlobalConfig() {
+        $response = Http::accept('application/json')
+          ->withHeaders(['origin' => config('app.url')])
+          ->get($this->sso_base_url.'/api/data/configuration');
+        return $response;
+    }
+
+
     public function getToken() {
         $now = Carbon::now()->addHours(1);
         $existingToken = SsoToken::where('expires_at' ,'>' ,$now )->first();
