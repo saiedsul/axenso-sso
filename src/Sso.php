@@ -65,10 +65,10 @@ class Sso {
           return $response;
     }
 
-    public function consent($user_id) {
+    public function consent($email) {
         $payload = [
             'client_id' => $this->client_id,
-            'user_id' => $user_id
+            'email' => $email
         ];
         $response = Http::accept('application/json')
                          ->withHeaders(['origin' => config('app.url')])
