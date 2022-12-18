@@ -132,12 +132,21 @@ class Sso {
             'profile' => $profile,
         ];
         $response = Http::accept('application/json')
-                        ->withHeaders(['origin' => config('app.url')])
+                         ->withHeaders(['origin' => config('app.url')])
                         ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/update-profile',$payload);
         return $response;
     }
-
+    public function lookUpEmail($email) {
+        $payload = [
+            'email' => $email,
+        ];
+        $response = Http::accept('application/json')
+                        ->withHeaders(['origin' => config('app.url')])
+                        ->withToken($this->token->token)
+                        ->post($this->sso_base_url.'/api/user/lookup-email',$payload);
+        return $response;
+    }
     public function getProfessions() {
         $response = Http::accept('application/json')
                             ->withHeaders(['origin' => config('app.url')])

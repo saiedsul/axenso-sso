@@ -57,6 +57,11 @@ class SsoController extends Controller
         $response = $sso->getProfile($request->user_id);
         return $this->showMessage($response->object(),$response->status());
     }
+    public function lookUpEmail(Request $request) {
+        $sso = new Sso();
+        $response = $sso->lookUpEmail($request->email);
+        return $this->showMessage($response->object(),$response->status());
+    }
     public function updateProfile(Request $request) {
         $sso = new Sso();
         $response = $sso->updateProfile($request->user_id,$request->profile);
