@@ -52,7 +52,11 @@ class SsoController extends Controller
         $response = $sso->passwordReset($request->password,$request->password_confirmation,$request->reset_token);
         return $this->showMessage($response->object(),$response->status());
     }
-
+    public function getProfile(Request $request) {
+        $sso = new Sso();
+        $response = $sso->getProfile($request->user_id);
+        return $this->showMessage($response->object(),$response->status());
+    }
     public function updateProfile(Request $request) {
         $sso = new Sso();
         $response = $sso->updateProfile($request->user_id,$request->profile);

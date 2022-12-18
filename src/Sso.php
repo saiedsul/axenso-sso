@@ -115,6 +115,16 @@ class Sso {
                         ->post($this->sso_base_url.'/api/user/password/change',$payload);
         return $response;
     }
+    public function getProfile($user_id) {
+        $payload = [
+            'user_id' => $user_id,
+        ];
+        $response = Http::accept('application/json')
+                        ->withHeaders(['origin' => config('app.url')])
+                        ->withToken($this->token->token)
+                        ->get($this->sso_base_url.'/api/user/get-profile',$payload);
+        return $response;
+    }
     public function updateProfile($user_id,$profile) {
         $payload = [
             'user_id' => $user_id,
@@ -122,8 +132,8 @@ class Sso {
             'profile' => $profile,
         ];
         $response = Http::accept('application/json')
-                         ->withHeaders(['origin' => config('app.url')])
-                            ->withToken($this->token->token)
+                        ->withHeaders(['origin' => config('app.url')])
+                        ->withToken($this->token->token)
                         ->post($this->sso_base_url.'/api/user/update-profile',$payload);
         return $response;
     }
