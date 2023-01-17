@@ -168,6 +168,13 @@ class Sso {
         return $response;
     }
 
+    public function getCityCode($city) {
+        $response = Http::accept('application/json')
+          ->withHeaders(['origin' => config('app.url')])
+          ->get($this->sso_base_url.'/api/data/'.$this->client_id.'/cityCode?city='.$city);
+        return $response;
+    }
+
     public function getGlobalConfig() {
         $response = Http::accept('application/json')
           ->withHeaders(['origin' => config('app.url')])
