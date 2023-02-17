@@ -147,6 +147,21 @@ class Sso {
                         ->post($this->sso_base_url.'/api/user/lookup-email',$payload);
         return $response;
     }
+
+    public function lookUpConsent($client_id,$user_id) {
+        $payload = [
+            'client_id' => $client_id,
+            'user_id' => $user_id,
+        ];
+        $response = Http::accept('application/json')
+                        ->withHeaders(['origin' => config('app.url')])
+                        ->withToken($this->token->token)
+                        ->post($this->sso_base_url.'/api/user/lookup-consent',$payload);
+        return $response;
+    }
+
+
+
     public function getProfessions() {
         $response = Http::accept('application/json')
                             ->withHeaders(['origin' => config('app.url')])
