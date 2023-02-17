@@ -160,6 +160,17 @@ class Sso {
         return $response;
     }
 
+    public function ManualConsent($client_id,$user_id) {
+        $payload = [
+            'client_id' => $client_id,
+            'user_id' => $user_id,
+        ];
+        $response = Http::accept('application/json')
+                        ->withHeaders(['origin' => config('app.url')])
+                        ->withToken($this->token->token)
+                        ->post($this->sso_base_url.'/api/user/manual-consent',$payload);
+        return $response;
+    }
 
 
     public function getProfessions() {
