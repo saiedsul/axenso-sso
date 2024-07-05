@@ -36,6 +36,17 @@ class Sso {
                             ]);
         return $response;
     }
+    public function loginByToken($token,$origin_client_id) {
+        $response = Http::accept('application/json')
+        ->withHeaders(['origin' => config('app.url')])
+       ->withToken($this->token->token)
+       ->post($this->sso_base_url.'/api/user/userTokenAuth',[
+           'token' => $token,
+           'client_id' => $this->client_id,
+           'origin_client_id' => $origin_client_id
+       ]);
+        return $response;
+    }
 
     public function register($email,$password,$password_confirmation,$profile) {
         $payload = array(

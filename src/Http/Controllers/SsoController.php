@@ -16,6 +16,12 @@ class SsoController extends Controller
         $response = $sso->login($request->email,$request->password);
         return $this->showMessage($response->object(),$response->status());
     }
+    public function loginByToken(Request $request) {
+        $sso = new Sso();
+        $response = $sso->loginByToken($request->token,$request->client_id);
+        return $this->showMessage($response->object(),$response->status());
+
+    }
 
     public function register(Request $request){
        $sso = new Sso();
